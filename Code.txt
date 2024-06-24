@@ -1,0 +1,29 @@
+Drag and Drop the TextBox, Label and button from your Visual Studio toolbox to your winform, 
+then design a simple UI that allows you to copy file from another folder in c# as shown below.
+// c# get the file name from the source path
+private void btnBrowse_Click(object sender, EventArgs e)
+{
+    using (OpenFileDialog ofd = new OpenFileDialog() { Filter = "All|*.*" })
+    {
+        if (ofd.ShowDialog() == DialogResult.OK)
+            txtFileName.Text = ofd.FileName;
+    }
+}
+
+// c# copy file.copy directory
+private void btnCopy_Click(object sender, EventArgs e)
+{
+    // directory c# copy file
+    using (FolderBrowserDialog ofd = new FolderBrowserDialog())
+    {
+        if (ofd.ShowDialog() == DialogResult.OK)
+        {
+            FileInfo fileInfo = new FileInfo(txtFileName.Text);
+            // c# construct the destination path
+            txtTargetPath.Text = Path.Combine(ofd.SelectedPath, fileInfo.Name);
+            // c# copy the file
+            File.Copy(txtFileName.Text, txtTargetPath.Text, true);
+            MessageBox.Show("You have been succesfully copied.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+}
